@@ -1,12 +1,12 @@
 #include <iostream>
-#include "Socket.hpp"
-
-using Pokepon::Socket;
+#include "Client.hpp"
+#include "DefaultExecutor.hpp"
 
 int main() {
-	// Create a socket and connect it to pokepon.center:12344
-	Socket s;
-	while (s.connected()) {
-		std::cout << "line: " << s.readLine() << std::endl;
+	Pokepon::Client client;
+	client.attachExecutor(new Pokepon::DefaultExecutor);
+	client.connect();
+	while (client.connected()) {
+		std::cout << "line: " << client.readLine() << std::endl;
 	}
 }

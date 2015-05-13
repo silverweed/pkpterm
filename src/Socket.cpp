@@ -7,18 +7,22 @@
 namespace Pokepon {
 
 /**
- * Constructs and connects the socket to given ip and port
+ * Constructs the socket 
  */
-Socket::Socket(const std::string& ip, const unsigned short port) {
+Socket::Socket(const std::string& ip, const unsigned short port):
+	ip(ip), port(port) 
+{
 	sock_info.ai_family = AF_UNSPEC;
 	sock_info.ai_socktype = SOCK_STREAM;
 	sock_info.ai_flags = 0;
 	sock_info.ai_protocol = 0;
+}
 
+bool Socket::sock_connect() {
 	addrinfo *results;
 	if (getaddrinfo(ip.c_str(), std::to_string(port).c_str(), &sock_info, &results) != 0) {
 		std::cerr << "[Socket] Error in getaddrinfo()." << std::endl;
-		return;
+		return false;
 	}
 
 	// Connect to first good socket
@@ -37,9 +41,10 @@ Socket::Socket(const std::string& ip, const unsigned short port) {
 
 	if (!_connected) {
 		std::cerr << "[Socket] Error: could not connect to " << ip << ":" << port << std::endl;
-		return;
+		return false;
 	}
 	// connect successful
+	return true;
 }
 
 Socket::~Socket() {

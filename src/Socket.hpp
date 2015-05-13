@@ -6,6 +6,8 @@
 #include <netdb.h>
 #include <string>
 
+#define DEBUG 1
+
 namespace Pokepon {
 
 class Socket {	
@@ -24,7 +26,8 @@ public:
 	bool sock_connect();
 	void sock_close();
 	inline bool connected() const { return _connected; }
-	std::string readLine(); 
+	std::string readLine();
+	void writeLine(const std::string& msg);
 };
 
 } // namespace Pokepon

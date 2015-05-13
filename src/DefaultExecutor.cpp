@@ -4,8 +4,9 @@
 
 namespace Pokepon {
 
-void DefaultExecutor::execute(const std::string& msg) {
+unsigned short DefaultExecutor::execute(const std::string& msg) {
 	std::cout << msg << std::endl;
+	return 1;
 }
 
 } // end namespace Pokepon

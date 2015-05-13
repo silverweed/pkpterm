@@ -82,7 +82,15 @@ std::string Socket::readLine() {
 	if (buffer.back() == '\r') 
 		buffer.pop_back();
 
+#if DEBUG > 0
+	std::clog << "[Socket] read: " + buffer << std::endl;
+#endif
 	return buffer;
+}
+
+void Socket::writeLine(const std::string& msg) {
+	std::string m = msg + '\n';
+	send(sfd, m.c_str(), m.length(), MSG_DONTWAIT);
 }
 
 void Socket::sock_close() {
